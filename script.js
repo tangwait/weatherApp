@@ -1,16 +1,3 @@
-// function searchWeather(searchTerm) {
-//     fetch(`http://api.weatherapi.com/v1/forecast.json?key=3ea9677e497c4c4484a92657231311&q=${searchTerm}&days=3&aqi=yes&alerts=yes
-//     `)
-//     .then(function(response) {
-//         return response.json()
-//     })
-//     .then(function(response) {
-
-//     })
-// }
-
-// searchWeather(London);
-
 async function getLocationName(searchTerm) {
     const location = document.querySelector('.location');
 
