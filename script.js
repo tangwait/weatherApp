@@ -51,6 +51,24 @@ async function initial(searchTerm) {
     location.textContent = `${locationName.location.name}, ${locationName.location.country}`;
 }
 
+const forecastDays = [];
+
+async function getForecast(searchTerm) {
+    forecastDays.length = 0;
+    const forecastData = await getData(searchTerm);
+
+    forecastData.forecast.forecastday.forEach(forecastDay => {
+        forecastDays.push(forecastDay);
+    });
+
+    console.log(forecastDays);
+
+// forecastData = getData > for each forecastDay > fill card with 
+// forecastData.forecast.forecastday[0, 1, 2].condition/date/maxtemp/mintemp/humidity
+}
+
+getForecast('london');
+
 searchLocation();
 initial('tokyo');
 test();
