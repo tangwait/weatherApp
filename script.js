@@ -50,6 +50,9 @@ async function initial(searchTerm) {
 
     const locationName = await getData(searchTerm);
     location.textContent = `${locationName.location.name}, ${locationName.location.country}`;
+    getForecast(searchTerm);
+    updateImages();
+    updateTemp();
 }
 
 const forecastDays = [];
@@ -74,9 +77,14 @@ async function getForecast(searchTerm) {
 function updateImages() {
     const cardImages = document.querySelectorAll('.card img');
     cardImages.forEach((imgElement, index) => {
-        imgElement.src = 'http:' + forecastDays[index].day.condition.icon
-    })
+        if (forecastDays[index] && forecastDays[index].day && forecastDays[index].day.condition) {
+            imgElement.src = 'http:' + forecastDays[index].day.condition.icon;
+        } else {
+            return null
+        }
+    });
 }
+
 
 
 function updateTemp() {
@@ -84,12 +92,22 @@ function updateTemp() {
     const high = document.querySelectorAll('.high');
 
     low.forEach((tempElement, index) => {
-        tempElement.textContent = forecastDays[index].day.mintemp_c + "°C"
-    })
+        if (forecastDays[index] && forecastDays[index].day && forecastDays[index].day.mintemp_c !== undefined) {
+            tempElement.textContent = forecastDays[index].day.mintemp_c + "°C";
+        } else {
+            tempElement.textContent = "N/A"; 
+        }
+    });
+
     high.forEach((tempElement, index) => {
-        tempElement.textContent = forecastDays[index].day.maxtemp_c + "°C"
-    })
+        if (forecastDays[index] && forecastDays[index].day && forecastDays[index].day.maxtemp_c !== undefined) {
+            tempElement.textContent = forecastDays[index].day.maxtemp_c + "°C";
+        } else {
+            tempElement.textContent = "N/A"; 
+        }
+    });
 }
+
 
 searchLocation();
 initial('tokyo');
