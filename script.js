@@ -3,13 +3,14 @@ async function searchLocation() {
     button.addEventListener('click', async (event) => {
         event.preventDefault();
         const searchTerm = document.querySelector('#search').value;
+        getForecast(searchTerm);
 
         const locationNameData = await getData(searchTerm);
         if (locationNameData) {
             const location = document.querySelector('.location');
             location.textContent = `${locationNameData.location.name}, ${locationNameData.location.country}`;
         } else {
-            return "No search term provided"
+            return alert("No search term provided")
         }
         console.log('this works');
     });
@@ -21,7 +22,7 @@ async function getData(searchTerm = '') {
         const data = await response.json();
         return data;
     } else {
-        return "No search term provided"
+        return null
     }
 }
 
@@ -62,12 +63,33 @@ async function getForecast(searchTerm) {
     });
 
     console.log(forecastDays);
+    updateImages();
+    updateTemp();
 
 // forecastData = getData > for each forecastDay > fill card with 
 // forecastData.forecast.forecastday[0, 1, 2].condition/date/maxtemp/mintemp/humidity
 }
 
-getForecast('london');
+
+function updateImages() {
+    const cardImages = document.querySelectorAll('.card img');
+    cardImages.forEach((imgElement, index) => {
+        imgElement.src = 'http:' + forecastDays[index].day.condition.icon
+    })
+}
+
+
+function updateTemp() {
+    const low = document.querySelectorAll('.low');
+    const high = document.querySelectorAll('.high');
+
+    low.forEach((tempElement, index) => {
+        tempElement.textContent = forecastDays[index].day.mintemp_c + "°C"
+    })
+    high.forEach((tempElement, index) => {
+        tempElement.textContent = forecastDays[index].day.maxtemp_c + "°C"
+    })
+}
 
 searchLocation();
 initial('tokyo');
