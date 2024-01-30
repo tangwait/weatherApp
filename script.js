@@ -18,7 +18,7 @@ async function searchLocation() {
 
 async function getData(searchTerm = '') {
     if (searchTerm.trim() !== '') {
-        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=3ea9677e497c4c4484a92657231311&q=${searchTerm}&days=3&aqi=yes&alerts=yes`);
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=3ea9677e497c4c4484a92657231311&q=${searchTerm}&days=3&aqi=yes&alerts=yes`);
         const data = await response.json();
         return data;
     } else {
@@ -36,7 +36,7 @@ async function getLocationName(searchTerm) {
 
 
 function test() {
-    fetch(`http://api.weatherapi.com/v1/forecast.json?key=3ea9677e497c4c4484a92657231311&q=tokyo&days=3&aqi=yes&alerts=yes`)
+    fetch(`https://api.weatherapi.com/v1/forecast.json?key=3ea9677e497c4c4484a92657231311&q=tokyo&days=3&aqi=yes&alerts=yes`)
     .then(function(response) {
         return response.json();
     })
